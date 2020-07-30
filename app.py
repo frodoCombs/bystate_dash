@@ -8,12 +8,11 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-url = 'https://raw.githubusercontent.com/frodoCombs/covid_dash/master/covid.csv'
-cases = pd.read_csv(url,sep=",")
-print(cases.head(5))
+#url = 'https://raw.githubusercontent.com/frodoCombs/covid_dash/master/covid.csv'
+cases = pd.read_csv('covid.csv',sep=",")
+
 by_state = cases.drop(columns=['County Name','stateFIPS','countyFIPS'])
 by_state = by_state.groupby(by_state['State'],as_index=False).sum()
-by_state = pd.melt(by_state,id_vars='State')
 
 states = by_state.State.unique()
 states.sort()
@@ -51,12 +50,15 @@ def update_graph(grpnames,start_date,end_date):
 	start = dt.strptime(start_date, "%m/%d/%y")
 	end = dt.strptime(end_date, "%m/%d/%y")
 	date_range = [start + timedelta(days=x) for x in range(0, (end-start).days)]
-	date_range = [d.strftime("%#m/%#d/%y")for d in date_range]
+	date_range = [d.strftime("%-m/%-d/%y")for d in date_range]
 
 	# Plot the data
 	df = by_state.copy()
+	df = pd.melt(df,id_vars='State')
 	df = df[df['State'].isin(grpnames)]
 	df = df[df['variable'].isin(date_range)]
+
+	
 	import plotly.express as px
 	return px.line(
 	data_frame=df,x='variable',y='value',color='State',
