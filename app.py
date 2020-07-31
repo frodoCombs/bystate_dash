@@ -34,7 +34,7 @@ app.layout = html.Div(children = [
 	html.Div([dcc.Checklist(id='state-select', 
 			options=[{'label': i, 'value': i} for i in states],
 			value=['NY','TX'], labelStyle={'display':'inline-block'},
-			style={'width':'60%','margin':'auto'})]),
+			style={'width':'70%','margin':'auto'})]),
 	html.Button('All States',id='button',n_clicks=0,style=wh),
 	html.H4("Choose the date range"),
 	dcc.DatePickerRange(
