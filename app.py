@@ -29,7 +29,7 @@ app = dash.Dash(__name__)
 server = app.server
 
 app.layout = html.Div(children = [
-	html.H1("Confirmed Covid-19 Cases - by state"),
+	html.H1("Confirmed COVID-19 Cases - by state"),
 	html.H4("Choose which states to visualize"),
 	html.Div([dcc.Checklist(id='state-select', 
 			options=[{'label': i, 'value': i} for i in states],
